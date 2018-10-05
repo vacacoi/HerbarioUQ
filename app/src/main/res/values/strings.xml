@@ -2,8 +2,19 @@
     <string name="app_name">HerbarioUQ</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_title">HerbarioUQ</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <!--cardView menú principal -->
+    <string name="titulo">HERBARIO UNIQUINDIO</string>
+    <string name="subtitulo">Sesión de Invitados</string>
+    
+    <!--Menú principal -->
+    <string name="lista_plantas">Lista de plantas</string>
+    <string name="inicia_sesion">Iniciar sesión</string>
+    <string name="registro">Registrarse</string>
+
+
 </resources>
