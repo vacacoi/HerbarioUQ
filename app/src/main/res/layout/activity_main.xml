@@ -22,4 +22,10 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
+    <fragment
+        android:id="@+id/lista_plantas_fragment"
+        class="co.edu.uniquindio.vc.jq.herbariouq.Fragmentos.ListaPlantas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </android.support.v4.widget.DrawerLayout>

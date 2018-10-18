@@ -10,11 +10,14 @@
     <!--cardView menú principal -->
     <string name="titulo">HERBARIO UNIQUINDIO</string>
     <string name="subtitulo">Sesión de Invitados</string>
-    
+
     <!--Menú principal -->
     <string name="lista_plantas">Lista de plantas</string>
     <string name="inicia_sesion">Iniciar sesión</string>
     <string name="registro">Registrarse</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

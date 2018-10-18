@@ -1,5 +1,6 @@
 package co.edu.uniquindio.vc.jq.herbariouq.Actividades
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -8,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import co.edu.uniquindio.vc.jq.herbariouq.Fragmentos.ListaPlantas
 import co.edu.uniquindio.vc.jq.herbariouq.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -60,7 +62,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.lista_plantas -> {
-
+                supportFragmentManager.beginTransaction().add(R.id.lista_plantas_fragment,ListaPlantas
             }
             R.id.inicia_sesion -> {
 
