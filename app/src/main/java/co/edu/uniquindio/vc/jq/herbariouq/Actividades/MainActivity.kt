@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.lista_plantas -> {
-                supportFragmentManager.beginTransaction().add(R.id.lista_plantas_fragment,ListaPlantas
+                supportFragmentManager.beginTransaction().replace(R.id.lista_plantas_fragment, Fragment()).commit()
             }
             R.id.inicia_sesion -> {
 
