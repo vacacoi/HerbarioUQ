@@ -8,10 +8,39 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
     <include
+
         layout="@layout/app_bar_main"
+       />
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/relativelayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:gravity="center"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/image_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher_background"
+            android:scaleType="center"/>
+
+        <TextView
+            android:id="@+id/titulo_principal"
+            android:paddingBottom="205dp"
+            android:paddingRight="50dp"
+            android:layout_width="300dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Bienvenidos"
+            android:textStyle="bold"
+            android:textColor="#062970"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -22,10 +51,6 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
-    <fragment
-        android:id="@+id/lista_plantas_fragment"
-        class="co.edu.uniquindio.vc.jq.herbariouq.Fragmentos.ListaPlantas"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+
 
 </android.support.v4.widget.DrawerLayout>

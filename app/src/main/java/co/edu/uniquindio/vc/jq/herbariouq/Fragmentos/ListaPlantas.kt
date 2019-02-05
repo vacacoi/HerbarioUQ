@@ -3,6 +3,7 @@ package co.edu.uniquindio.vc.jq.herbariouq.Fragmentos
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,10 @@ private const val ARG_PARAM2 = "param2"
  */
 class ListaPlantas : Fragment() {
 
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -27,6 +32,7 @@ class ListaPlantas : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        Log.d("Oprime Lista plantas","=");
         return inflater.inflate(R.layout.fragment_lista_plantas, container, false)
     }
 

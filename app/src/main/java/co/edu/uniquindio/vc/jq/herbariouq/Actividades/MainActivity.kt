@@ -8,19 +8,28 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import co.edu.uniquindio.vc.jq.herbariouq.Fragmentos.ListaPlantas
 import co.edu.uniquindio.vc.jq.herbariouq.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    var textView:TextView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         setSupportActionBar(toolbar)
+        textView = findViewById<TextView>(R.id.titulo_principal)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -61,9 +70,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
+
+        val toolbar = findViewById(R.id.titulo_nav) as TextView
+
+        val newFragment: Fragment
+        val transaction = supportFragmentManager.beginTransaction()
         when (item.itemId) {
+
             R.id.lista_plantas -> {
-                supportFragmentManager.beginTransaction().replace(R.id.lista_plantas_fragment, Fragment()).commit()
+                textView!!.setVisibility(View.GONE)
+                toolbar.setText("Lista de plantas")
+                Log.d("Oprime Lista olantas","=");
+                //val Fragment = ListaPlantas()
+                newFragment = ListaPlantas()
+                transaction.replace(R.id.content_main, newFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+
+                //addFragment(Fragment)
+                //supportFragmentManager.beginTransaction().replace(R.id.content_main, ListaPlantas()).commit()
             }
             R.id.inicia_sesion -> {
 
