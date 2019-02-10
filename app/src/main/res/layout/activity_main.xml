@@ -13,33 +13,49 @@
 
         layout="@layout/app_bar_main"
        />
+
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/relativelayout"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/image_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_background"
-            android:scaleType="center"/>
 
-        <TextView
-            android:id="@+id/titulo_principal"
-            android:paddingBottom="205dp"
-            android:paddingRight="50dp"
-            android:layout_width="300dp"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Bienvenidos"
-            android:textStyle="bold"
-            android:textColor="#062970"
-            android:textSize="24sp" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="97dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="56dp"
+            android:background="#0000FF">
 
+            <TextView
+                android:id="@+id/textTituloInicio"
+                android:layout_width="365dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="center"
+                android:text="Herbario Uniquindio"
+                android:textColor="#F5FFFA"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSubInicio"
+                android:layout_width="365dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="27dp"
+                android:gravity="center"
+                android:text="Sesión Administrador"
+                android:textColor="#F5FFFA"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </FrameLayout>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

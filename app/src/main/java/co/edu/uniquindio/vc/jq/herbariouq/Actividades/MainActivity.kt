@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(toolbar)
-        textView = findViewById<TextView>(R.id.titulo_principal)
+        //textView = findViewById<TextView>(R.id.titulo_principal)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.lista_plantas -> {
 
-                val intent = Intent(this,Lo)
+
 
                 /*textView!!.setVisibility(View.GONE)
                 toolbar.setText("Lista de plantas")
@@ -95,6 +95,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 //supportFragmentManager.beginTransaction().replace(R.id.content_main, ListaPlantas()).commit()
             }
             R.id.inicia_sesion -> {
+                val intent = Intent(this,LoginActivity::class.java)
+                intent.putExtra("Iniciar Sesion","1")
+                startActivity(intent)
 
             }
             R.id.registro -> {
