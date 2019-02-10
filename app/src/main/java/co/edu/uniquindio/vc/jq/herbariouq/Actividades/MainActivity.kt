@@ -78,14 +78,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
 
             R.id.lista_plantas -> {
-                textView!!.setVisibility(View.GONE)
+
+                val intent = Intent(this,Lo)
+
+                /*textView!!.setVisibility(View.GONE)
                 toolbar.setText("Lista de plantas")
                 Log.d("Oprime Lista olantas","=");
                 //val Fragment = ListaPlantas()
                 newFragment = ListaPlantas()
                 transaction.replace(R.id.content_main, newFragment)
                 transaction.addToBackStack(null)
-                transaction.commit()
+                transaction.commit()*/
 
 
                 //addFragment(Fragment)
@@ -102,5 +105,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun openActivity(intent: Intent){
+
+
     }
 }
