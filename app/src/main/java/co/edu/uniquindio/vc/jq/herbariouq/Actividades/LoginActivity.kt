@@ -24,6 +24,8 @@ import co.edu.uniquindio.vc.jq.herbariouq.R
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import android.content.Intent
+import android.util.Log
 
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -128,11 +130,15 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             // form field with an error.
             focusView?.requestFocus()
         } else {
+
+            Log.d("Es logueado","Hola")
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true)
             mAuthTask = UserLoginTask(emailStr, passwordStr)
             mAuthTask!!.execute(null as Void?)
+
+
         }
     }
 
@@ -236,6 +242,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      */
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
+        val loginActivity=LoginActivity
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
@@ -261,7 +268,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
-                finish()
+                lanzarActividad()
             } else {
                 pass.error = getString(R.string.error_incorrect_password)
                 pass.requestFocus()
@@ -291,5 +298,11 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return false
+    }
+
+    fun lanzarActividad(){
+        val intent = Intent(this,ActivityLogueado::class.java)
+        intent.putExtra("Sesión Iniciada","1")
+        startActivity(intent)
     }
 }

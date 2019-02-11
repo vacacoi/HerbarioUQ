@@ -4,20 +4,46 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import co.edu.uniquindio.vc.jq.herbariouq.R
+import co.edu.uniquindio.vc.jq.herbariouq.vo.ListaPlantas
+import co.edu.uniquindio.vc.jq.herbariouq.Fragmentos.ListaPlantasFragment
+import co.edu.uniquindio.vc.jq.herbariouq.R.id.fab
+import co.edu.uniquindio.vc.jq.herbariouq.R.id.toolbar
 
 import kotlinx.android.synthetic.main.activity_lista_plantas.*
 
-class ListaPlantasActivity : AppCompatActivity() {
+class ListaPlantasActivity : AppCompatActivity(),ListaPlantasFragment.OnPlantaSeleccionadoListener {
+
+
+    override fun onPlantaSeleccionado(pos: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
+
+    var listaPlantas: ArrayList<ListaPlantas> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_plantas)
-        setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
+
+        listaPlantas = ArrayList()
+        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor"))
+        listaPlantas.add(ListaPlantas("Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1"))
+        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor"))
+        listaPlantas.add(ListaPlantas("Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1"))
+        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor"))
+        listaPlantas.add(ListaPlantas("Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1"))
+
+        val fragmentLista = supportFragmentManager.findFragmentById(R.id.fragmentoListaPlantas) as ListaPlantasFragment
+        fragmentLista.listaPlantas = listaPlantas
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return false
     }
 
 }

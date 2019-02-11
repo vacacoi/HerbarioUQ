@@ -14,7 +14,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import co.edu.uniquindio.vc.jq.herbariouq.Fragmentos.ListaPlantas
+import co.edu.uniquindio.vc.jq.herbariouq.Fragmentos.ListaPlantasFragment
 import co.edu.uniquindio.vc.jq.herbariouq.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -78,21 +78,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
 
             R.id.lista_plantas -> {
-
-
-
-                /*textView!!.setVisibility(View.GONE)
-                toolbar.setText("Lista de plantas")
-                Log.d("Oprime Lista olantas","=");
-                //val Fragment = ListaPlantas()
-                newFragment = ListaPlantas()
-                transaction.replace(R.id.content_main, newFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()*/
-
-
-                //addFragment(Fragment)
-                //supportFragmentManager.beginTransaction().replace(R.id.content_main, ListaPlantas()).commit()
+                val intent = Intent(this,ListaPlantasActivity::class.java)
+                intent.putExtra("Lista plantas","1")
+                startActivity(intent)
             }
             R.id.inicia_sesion -> {
                 val intent = Intent(this,LoginActivity::class.java)

@@ -39,6 +39,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_lista_plantas">ListaPlantasActivity</string>
+    <string name="title_activity_lista_plantas">Lista de plantas</string>
+    <string name="title_activity_logueado">Herbario UQ</string>
 
 </resources>

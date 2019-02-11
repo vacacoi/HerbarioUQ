@@ -29,8 +29,13 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".Actividades.ListaPlantasActivity"
-            android:label="@string/title_activity_lista_plantas"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_lista_plantas" />
+        <activity
+            android:name=".Actividades.ActivityLogueado"
+            android:label="@string/title_activity_logueado"
+            android:theme="@style/AppTheme.NoActionBar"
+           ></activity>
+
     </application>
 
 </manifest>
