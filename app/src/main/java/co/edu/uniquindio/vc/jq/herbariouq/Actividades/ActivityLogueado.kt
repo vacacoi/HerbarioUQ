@@ -1,6 +1,8 @@
 package co.edu.uniquindio.vc.jq.herbariouq.Actividades
 
+import android.content.Intent
 import android.os.Bundle
+import android.support.design.internal.NavigationMenuView
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -8,24 +10,43 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import co.edu.uniquindio.vc.jq.herbariouq.R
 import kotlinx.android.synthetic.main.activity_logueado.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_activity_logueado.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import android.widget.TextView
+
+
 
 class ActivityLogueado : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    var nombre:String? = null
+    var apellido:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logueado)
         setSupportActionBar(toolbar_logueado)
 
+        nombre = intent.extras.getString("nombre")
+        apellido = intent.extras.getString("apellido")
+
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout_logueado, toolbar_logueado, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout_logueado.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view_logueados.setNavigationItemSelectedListener(this)
+        textSubNombre.text = nombre+" "+apellido
+        val navigationView = findViewById<View>(R.id.nav_view_logueados) as NavigationView
+        val headerView = navigationView.getHeaderView(0)
+        val navNombre = headerView.findViewById(R.id.textView_nombre) as TextView
+        navNombre.text = nombre+" "+apellido
+
+
+
+
     }
 
     override fun onBackPressed() {
@@ -56,7 +77,9 @@ class ActivityLogueado : AppCompatActivity(), NavigationView.OnNavigationItemSel
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.lista_plantas_logueado -> {
-                // Handle the camera action
+                val intent = Intent(this,ListaPlantasActivity::class.java)
+                intent.putExtra("Lista plantas","1")
+                startActivity(intent)
             }
             R.id.listar_plantas_pendientes -> {
 

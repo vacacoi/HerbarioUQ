@@ -302,7 +302,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     fun lanzarActividad(){
         val intent = Intent(this,ActivityLogueado::class.java)
-        intent.putExtra("Sesión Iniciada","1")
+        intent.putExtra("nombre","Victor")
+        intent.putExtra("apellido","Cruz")
         startActivity(intent)
     }
 }

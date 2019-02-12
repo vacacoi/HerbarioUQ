@@ -3,7 +3,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">HerbarioUQ</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_subtitle"></string>
+    <string name="nav_header_admin">Hola de vuelta administrador</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -24,6 +25,10 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_loguin">LoguinActivity</string>
     <string name="title_activity_login">Iniciar Sesión</string>
+    <string name="lista_plantas_pendiende">Lista plantas pendientes</string>>
+    <string name="gestion_recolectores">Gestionar recolectores</string>
+    <string name="datos">Datos de la cuenta</string>
+    <string name="salir">Salir</string>
 
     <!-- Strings related to login -->
     <string name="prompt_usuario">Usuario </string>
@@ -41,5 +46,6 @@
     </string>
     <string name="title_activity_lista_plantas">Lista de plantas</string>
     <string name="title_activity_logueado">Herbario UQ</string>
+
 
 </resources>

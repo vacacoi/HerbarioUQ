@@ -11,19 +11,19 @@
         <item
             android:id="@+id/listar_plantas_pendientes"
             android:icon="@drawable/ic_people_black_24dp"
-            android:title="@string/inicia_sesion" />
+            android:title="@string/lista_plantas_pendiende" />
         <item
             android:id="@+id/gestion_recolectores"
             android:icon="@drawable/ic_chrome_reader_mode_black_24dp"
-            android:title="@string/registro" />
+            android:title="@string/gestion_recolectores" />
         <item
             android:id="@+id/datos_cuenta"
             android:icon="@drawable/ic_chrome_reader_mode_black_24dp"
-            android:title="@string/registro" />
+            android:title="@string/datos" />
         <item
             android:id="@+id/salir_login"
             android:icon="@drawable/ic_chrome_reader_mode_black_24dp"
-            android:title="@string/registro" />
+            android:title="@string/salir" />
         <!--<item
              android:id="@+id/nav_manage"
              android:icon="@drawable/ic_menu_manage"
