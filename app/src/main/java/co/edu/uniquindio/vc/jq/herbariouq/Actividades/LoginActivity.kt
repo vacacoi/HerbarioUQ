@@ -305,5 +305,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         intent.putExtra("nombre","Victor")
         intent.putExtra("apellido","Cruz")
         startActivity(intent)
+        finish()
     }
 }

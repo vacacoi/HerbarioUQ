@@ -33,9 +33,17 @@
         <activity
             android:name=".Actividades.ActivityLogueado"
             android:label="@string/title_activity_logueado"
-            android:theme="@style/AppTheme.NoActionBar"
-           ></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Actividades.ActivityGestionUser"
+            android:label="@string/title_activity_gestion_user" />
+        <activity
+            android:name=".Actividades.DatosUsuarioActivity"
+            android:label="@string/title_activity_datos_usuario" />
+        <activity
+            android:name=".Actividades.PlantasPendActivity"
+            android:label="@string/title_activity_plantas_pend"
+          ></activity>
     </application>
 
 </manifest>

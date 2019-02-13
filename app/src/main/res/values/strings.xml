@@ -46,6 +46,15 @@
     </string>
     <string name="title_activity_lista_plantas">Lista de plantas</string>
     <string name="title_activity_logueado">Herbario UQ</string>
+    <string name="title_activity_gestion_user">Solicitudes de Usuarios</string>
+    <string name="title_activity_datos_usuario">Modificar Datos</string>
 
-
+    <!--Datos de usuario -->
+    <string name="datos_correo">Correo</string>
+    <string name="datos_nombre">Nombre</string>
+    <string name="datos_apellido">Apellido</string>
+    <string name="datos_telefono">Teléfono</string>
+    <string name="datos_profesion">Profesión</string>
+    <string name="datos_foto">Fotografía</string>
+    <string name="title_activity_plantas_pend">Plantas enviadas</string>
 </resources>

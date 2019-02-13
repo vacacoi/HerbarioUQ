@@ -1,31 +1,21 @@
 package co.edu.uniquindio.vc.jq.herbariouq.Fragmentos
 
-
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
-import android.support.v7.widget.CardView
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.MenuItem
-import android.widget.LinearLayout
-
 
 import co.edu.uniquindio.vc.jq.herbariouq.R
-import co.edu.uniquindio.vc.jq.herbariouq.util.AdaptadorListaPlantas
-import co.edu.uniquindio.vc.jq.herbariouq.util.AdaptadorListaRecol
+import co.edu.uniquindio.vc.jq.herbariouq.util.AdaptadorListaPlanPend
 import co.edu.uniquindio.vc.jq.herbariouq.vo.ListaPlantas
-import kotlinx.android.synthetic.main.fragment_lista_plantas.*
-import kotlinx.android.synthetic.main.resumen_lista_plantas.*
-import java.util.ArrayList
+import kotlinx.android.synthetic.main.fragment_lista_plantas_pend.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,16 +24,20 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
+ * Activities that contain this fragment must implement the
+ * [ListaPlantasPendFragment.OnFragmentInteractionListener] interface
+ * to handle interaction events.
+ * Use the [ListaPlantasPendFragment.newInstance] factory method to
+ * create an instance of this fragment.
  *
  */
-class ListaPlantasFragment : Fragment() {
+class ListaPlantasPendFragment : Fragment() {
 
-
-    private lateinit var listener: OnPlantaSeleccionadoListener
+    private lateinit var listener: OnPlantaPendSeleccionadoListener
     var listaPlantas: ArrayList<ListaPlantas> = ArrayList()
-    var adaptador: AdaptadorListaPlantas? = null
+    var adaptador: AdaptadorListaPlanPend? = null
 
-    interface OnPlantaSeleccionadoListener {
+    interface OnPlantaPendSeleccionadoListener {
         fun onPlantaSeleccionado(pos: Int)
     }
 
@@ -57,7 +51,7 @@ class ListaPlantasFragment : Fragment() {
         Log.d("Oprime Lista plantas", "=");
 
 
-        return inflater.inflate(R.layout.fragment_lista_plantas, container, false)
+        return inflater.inflate(R.layout.fragment_lista_plantas_pend, container, false)
     }
 
     override fun onPause() {
@@ -72,10 +66,10 @@ class ListaPlantasFragment : Fragment() {
         if (context is Activity) {
 
             try {
-                listener = context as OnPlantaSeleccionadoListener
+                listener = context as OnPlantaPendSeleccionadoListener
             } catch (e: ClassCastException) {
                 throw ClassCastException("${activity.toString()} debe implementar la interfaz OnListaSeleccionadoListener")
-                // Log.v("ListaDePokemonFragment", "Error: ${e.message}")
+                 Log.v("ListaDePokemonFragment", "Error: ${e.message}")
 
             }
 
@@ -87,22 +81,12 @@ class ListaPlantasFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adaptador = AdaptadorListaPlantas(this, listaPlantas)
-        listaPlantas_view.adapter = this.adaptador
-        listaPlantas_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+        adaptador = AdaptadorListaPlanPend(this, listaPlantas)
+        listaPlanPen_view.adapter = this.adaptador
+        listaPlanPen_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         setHasOptionsMenu(true)
     }
 
 
-    fun mostrarDetallePlanta() {
-        val detallePlanta = DetallePlantasFragment()
-        detallePlanta.setStyle(DialogFragment.STYLE_NORMAL,
-                R.style.DialogoTitulo
-        )
-        detallePlanta.show(fragmentManager, "DetallePlanta")
-    }
-
-
-
-
 }
+

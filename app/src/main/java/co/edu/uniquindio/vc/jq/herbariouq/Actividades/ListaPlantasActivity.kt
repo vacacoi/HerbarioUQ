@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import co.edu.uniquindio.vc.jq.herbariouq.R
 import co.edu.uniquindio.vc.jq.herbariouq.vo.ListaPlantas
 import co.edu.uniquindio.vc.jq.herbariouq.Fragmentos.ListaPlantasFragment
@@ -26,6 +27,7 @@ class ListaPlantasActivity : AppCompatActivity(),ListaPlantasFragment.OnPlantaSe
 
     var listaPlantas: ArrayList<ListaPlantas> = ArrayList()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_plantas)
@@ -42,8 +44,6 @@ class ListaPlantasActivity : AppCompatActivity(),ListaPlantasFragment.OnPlantaSe
 
         val fragmentLista = supportFragmentManager.findFragmentById(R.id.fragmentoListaPlantas) as ListaPlantasFragment
         fragmentLista.listaPlantas = listaPlantas
-
-
 
     }
 

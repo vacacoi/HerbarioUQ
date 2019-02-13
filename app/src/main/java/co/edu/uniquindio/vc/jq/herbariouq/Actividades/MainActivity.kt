@@ -71,10 +71,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
 
-        val toolbar = findViewById(R.id.titulo_nav) as TextView
-
-        val newFragment: Fragment
-        val transaction = supportFragmentManager.beginTransaction()
         when (item.itemId) {
 
             R.id.lista_plantas -> {
@@ -98,8 +94,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    fun openActivity(intent: Intent){
 
-
-    }
 }

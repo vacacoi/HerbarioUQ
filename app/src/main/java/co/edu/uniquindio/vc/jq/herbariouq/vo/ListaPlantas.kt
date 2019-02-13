@@ -14,6 +14,7 @@ class ListaPlantas() : Parcelable {
     var especie: String? = null
     var detalle: String? = null
     var autor: String? = null
+    var estado: String? = null
 
     constructor(parcel: Parcel) : this() {
         nombre = parcel.readString()
@@ -38,6 +39,22 @@ class ListaPlantas() : Parcelable {
         this.especie = especie
         this.detalle = detalle
         this.autor = autor
+
+
+    }
+
+    constructor(nombre: String?,genero: String?,familia: String?,subfamilia: String?, tribu: String?, especie: String?,
+                detalle: String?,autor: String?, estado:String?) : this() {
+
+        this.nombre = nombre
+        this.genero = genero
+        this.familia = familia
+        this.subfamilia = subfamilia
+        this.tribu = tribu
+        this.especie = especie
+        this.detalle = detalle
+        this.autor = autor
+        this.estado = estado
 
 
     }

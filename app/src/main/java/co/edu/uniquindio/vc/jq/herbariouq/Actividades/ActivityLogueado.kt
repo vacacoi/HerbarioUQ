@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,11 +20,10 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import android.widget.TextView
 
 
-
 class ActivityLogueado : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    var nombre:String? = null
-    var apellido:String? = null
+    var nombre: String? = null
+    var apellido: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +38,13 @@ class ActivityLogueado : AppCompatActivity(), NavigationView.OnNavigationItemSel
         drawer_layout_logueado.addDrawerListener(toggle)
         toggle.syncState()
 
-        textSubNombre.text = nombre+" "+apellido
+        textSubNombre.text = nombre + " " + apellido
         val navigationView = findViewById<View>(R.id.nav_view_logueados) as NavigationView
         val headerView = navigationView.getHeaderView(0)
         val navNombre = headerView.findViewById(R.id.textView_nombre) as TextView
-        navNombre.text = nombre+" "+apellido
+        navNombre.text = nombre + " " + apellido
 
-
+        nav_view_logueados.setNavigationItemSelectedListener(this)
 
 
     }
@@ -75,23 +75,30 @@ class ActivityLogueado : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
+        Log.d("Llega hasta aqui","asdasd")
         when (item.itemId) {
             R.id.lista_plantas_logueado -> {
-                val intent = Intent(this,ListaPlantasActivity::class.java)
-                intent.putExtra("Lista plantas","1")
+                val intent = Intent(this, ListaPlantasActivity::class.java)
+                intent.putExtra("Lista plantas", "1")
                 startActivity(intent)
             }
             R.id.listar_plantas_pendientes -> {
-
+                val intent = Intent(this,PlantasPendActivity::class.java)
+                startActivity(intent)
             }
             R.id.gestion_recolectores -> {
-
+                val intent = Intent(this, ActivityGestionUser::class.java)
+                intent.putExtra("Gestion Recolectores", "1")
+                startActivity(intent)
             }
             R.id.datos_cuenta -> {
+                val intent = Intent(this, DatosUsuarioActivity::class.java)
+                startActivity(intent)
+
 
             }
             R.id.salir_login -> {
-
+                finish()
             }
 
         }
