@@ -3,13 +3,19 @@ package co.edu.uniquindio.vc.jq.herbariouq.Fragmentos
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
+import android.support.v7.widget.CardView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.MenuItem
 import android.widget.LinearLayout
 
 
@@ -17,6 +23,7 @@ import co.edu.uniquindio.vc.jq.herbariouq.R
 import co.edu.uniquindio.vc.jq.herbariouq.util.AdaptadorListaPlantas
 import co.edu.uniquindio.vc.jq.herbariouq.vo.ListaPlantas
 import kotlinx.android.synthetic.main.fragment_lista_plantas.*
+import kotlinx.android.synthetic.main.resumen_lista_plantas.*
 import java.util.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,7 +35,7 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-open class ListaPlantasFragment : Fragment(), AdaptadorListaPlantas.OnClickAdaptadorListaPlantas {
+class ListaPlantasFragment : Fragment() {
 
 
     private lateinit var listener: OnPlantaSeleccionadoListener
@@ -47,6 +54,8 @@ open class ListaPlantasFragment : Fragment(), AdaptadorListaPlantas.OnClickAdapt
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         Log.d("Oprime Lista plantas", "=");
+
+
         return inflater.inflate(R.layout.fragment_lista_plantas, container, false)
     }
 
@@ -54,9 +63,7 @@ open class ListaPlantasFragment : Fragment(), AdaptadorListaPlantas.OnClickAdapt
         super.onPause()
     }
 
-    override fun onClickPosition(pos: Int) {
-        listener.onPlantaSeleccionado(pos)
-    }
+
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -84,6 +91,17 @@ open class ListaPlantasFragment : Fragment(), AdaptadorListaPlantas.OnClickAdapt
         listaPlantas_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         setHasOptionsMenu(true)
     }
+
+
+    fun mostrarDetallePlanta() {
+        val detallePlanta = DetallePlantasFragment()
+        detallePlanta.setStyle(DialogFragment.STYLE_NORMAL,
+                R.style.DialogoTitulo
+        )
+        detallePlanta.show(fragmentManager, "DetallePlanta")
+    }
+
+
 
 
 }
