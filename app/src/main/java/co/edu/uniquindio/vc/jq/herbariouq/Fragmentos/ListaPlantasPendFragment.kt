@@ -82,9 +82,9 @@ class ListaPlantasPendFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         adaptador = AdaptadorListaPlanPend(this, listaPlantas)
-        listaPlanPen_view.adapter = this.adaptador
-        listaPlanPen_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-        setHasOptionsMenu(true)
+       // listaPlanPen_view.adapter = this.adaptador
+        //listaPlanPen_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+        //setHasOptionsMenu(true)
     }
 
 

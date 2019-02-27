@@ -27,7 +27,7 @@ class AdaptadorListaPlanPend (fragment: Fragment, var listaPlantas:ArrayList<Lis
             listener= fragment as OnClickAdaptadorListaPlanPen
         }catch (e:ClassCastException){
 
-            Log.v("AdaptadorDeListaPlantapend", "Error, implemente la interfaz...")
+            Log.v("AdaptadorDeListaPlantapend", "Error, implemente la interfaz..."+e.message)
         }
 
     }
