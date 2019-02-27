@@ -2,9 +2,10 @@ package co.edu.uniquindio.vc.jq.herbariouq.vo
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.io.Serializable
 import java.util.*
 
-class ListaPlantas() : Parcelable {
+class ListaPlantas() : Parcelable, Serializable {
 
     var nombre: String? = null
     var genero: String? = null
@@ -15,6 +16,9 @@ class ListaPlantas() : Parcelable {
     var detalle: String? = null
     var autor: String? = null
     var estado: String? = null
+    var urlImagen: String?=null
+    var email: String?=null
+    var key: String?=null
 
     constructor(parcel: Parcel) : this() {
         nombre = parcel.readString()
@@ -25,26 +29,18 @@ class ListaPlantas() : Parcelable {
         especie = parcel.readString()
         detalle = parcel.readString()
         autor = parcel.readString()
+        estado = parcel.readString()
+        urlImagen = parcel.readString()
+        email = parcel.readString()
+        key = parcel.readString()
 
     }
 
-    constructor(nombre: String?,genero: String?,familia: String?,subfamilia: String?, tribu: String?, especie: String?,
-                detalle: String?,autor: String?) : this() {
-
-        this.nombre = nombre
-        this.genero = genero
-        this.familia = familia
-        this.subfamilia = subfamilia
-        this.tribu = tribu
-        this.especie = especie
-        this.detalle = detalle
-        this.autor = autor
 
 
-    }
 
     constructor(nombre: String?,genero: String?,familia: String?,subfamilia: String?, tribu: String?, especie: String?,
-                detalle: String?,autor: String?, estado:String?) : this() {
+                detalle: String?,autor: String?, estado:String?,urlImagen: String?,email:String?,key:String?) : this() {
 
         this.nombre = nombre
         this.genero = genero
@@ -55,6 +51,9 @@ class ListaPlantas() : Parcelable {
         this.detalle = detalle
         this.autor = autor
         this.estado = estado
+        this.urlImagen = urlImagen
+        this.email = email
+        this.key = key
 
 
     }
@@ -68,6 +67,10 @@ class ListaPlantas() : Parcelable {
         parcel.writeString(especie)
         parcel.writeString(detalle)
         parcel.writeString(autor)
+        parcel.writeString(estado)
+        parcel.writeString(urlImagen)
+        parcel.writeString(email)
+        parcel.writeString(key)
 
     }
 

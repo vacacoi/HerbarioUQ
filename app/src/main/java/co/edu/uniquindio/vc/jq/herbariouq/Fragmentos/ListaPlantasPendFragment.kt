@@ -14,6 +14,7 @@ import android.view.ViewGroup
 
 import co.edu.uniquindio.vc.jq.herbariouq.R
 import co.edu.uniquindio.vc.jq.herbariouq.util.AdaptadorListaPlanPend
+import co.edu.uniquindio.vc.jq.herbariouq.util.AdaptadorListaPlantas
 import co.edu.uniquindio.vc.jq.herbariouq.vo.ListaPlantas
 import kotlinx.android.synthetic.main.fragment_lista_plantas_pend.*
 
@@ -31,7 +32,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class ListaPlantasPendFragment : Fragment() {
+class ListaPlantasPendFragment : Fragment(), AdaptadorListaPlanPend.OnClickAdaptadorListaPlanPen {
+
+
+
 
     private lateinit var listener: OnPlantaPendSeleccionadoListener
     var listaPlantas: ArrayList<ListaPlantas> = ArrayList()
@@ -82,11 +86,19 @@ class ListaPlantasPendFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         adaptador = AdaptadorListaPlanPend(this, listaPlantas)
-       // listaPlanPen_view.adapter = this.adaptador
-        //listaPlanPen_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-        //setHasOptionsMenu(true)
+       listaPlanPen_view.adapter = this.adaptador
+        listaPlanPen_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+        setHasOptionsMenu(true)
     }
 
+    override fun onClickPosition(pos: Int) {
+        listener!!.onPlantaSeleccionado(pos)
+    }
+
+    fun agregarPlantas(listaPlanta: ListaPlantas) {
+        listaPlantas.add(listaPlanta)
+        adaptador!!.notifyItemChanged(0)
+    }
 
 }
 

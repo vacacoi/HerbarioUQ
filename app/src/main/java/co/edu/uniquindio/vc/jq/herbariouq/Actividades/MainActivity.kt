@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.TextView
 import co.edu.uniquindio.vc.jq.herbariouq.Fragmentos.ListaPlantasFragment
 import co.edu.uniquindio.vc.jq.herbariouq.R
+import co.edu.uniquindio.vc.jq.herbariouq.vo.Sesion
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import org.w3c.dom.Text
@@ -23,17 +24,25 @@ import org.w3c.dom.Text
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var textView:TextView?=null
+    var sesion: Sesion? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(toolbar)
+        sesion = Sesion(this)
         //textView = findViewById<TextView>(R.id.titulo_principal)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+        }
+
+        if (!sesion!!.getusename().equals("")) {
+            Log.d("Apenas", "llegue=" + sesion!!.getusename())
+            lanzarActividadSession()
+            finish()
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -85,7 +94,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.registro -> {
-
+                val intent = Intent(this, RegistroActivity::class.java)
+                intent.putExtra("Registro", "1")
+                startActivity(intent)
             }
 
         }
@@ -94,5 +105,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    /**
+     * Si el usuario no ha cerrado sesión, carga la actvidad principal
+     */
+    fun lanzarActividadSession() {
+        val intent = Intent(this, ActivityLogueado::class.java)
+        intent.putExtra("Iniciar Sesion", "1")
+        startActivity(intent)
+    }
 
 }

@@ -24,24 +24,47 @@ import co.edu.uniquindio.vc.jq.herbariouq.R
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import android.app.ProgressDialog
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
+import co.edu.uniquindio.vc.jq.herbariouq.util.ManagerFireBase
+import co.edu.uniquindio.vc.jq.herbariouq.vo.ListaPlantas
+import co.edu.uniquindio.vc.jq.herbariouq.vo.Sesion
+import co.edu.uniquindio.vc.jq.herbariouq.vo.Usuarios
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
+class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor>, ManagerFireBase.onActualizarAdaptador {
+
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private var mAuthTask: UserLoginTask? = null
+    lateinit var managerFireBase: ManagerFireBase
+    var sesion: Sesion? = null
+    var listaUsuarios: ArrayList<Usuarios> = ArrayList()
+    var mAuth: FirebaseAuth? = null
+    var progressDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
+        mAuth = FirebaseAuth.getInstance();
+        progressDialog = ProgressDialog(this)
+        sesion = Sesion(this)
+
+        managerFireBase = ManagerFireBase.managerInstance
+        managerFireBase.listener = this
+        managerFireBase.escucharEventoFireBase(2,this)
+
 
         // Set up the login form.
         populateAutoComplete()
@@ -54,7 +77,110 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         })
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
+
+        registro.setOnClickListener {
+            val intent = Intent(this, RegistroActivity::class.java)
+            intent.putExtra("Iniciar Sesion", "1")
+            startActivity(intent)
+        }
+
+
+        resetPass.setOnClickListener {
+            val emailStr = usuario.text.toString()
+            reestablecerPass(emailStr)
+        }
     }
+
+    override fun onStart() {
+        super.onStart()
+//        val user: FirebaseUser = mAuth!!.currentUser!!
+    }
+
+    /**
+     * Función que permite ingresar mediante email y contraseña a la apliación,
+     * esto se valida en firebase de acuerdo al email registrado.
+     */
+    fun ingresar(email: String, password: String) {
+        mAuth!!.signInWithEmailAndPassword(email!!, password!!)
+                .addOnCompleteListener(this) { task ->
+
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with signed-in user's information
+                        val user: FirebaseUser = mAuth!!.currentUser!!;
+                        Log.d("Log", "signInWithEmail:success" + user.email)
+                        sesion!!.setusename(user.email.toString())
+                        Log.d("Log", "signInWithEmail:success" + sesion!!.getusename())
+                        for (usuarios in listaUsuarios) {
+                            if (usuarios.correo.equals(sesion!!.getusename())) {
+                                sesion!!.setNombre(usuarios.nombre!!)
+                                sesion!!.setApellido(usuarios.apellido!!)
+                                sesion!!.setUrlFoto(usuarios.urlImagenPerfil!!)
+                                sesion!!.setTelefono(usuarios.telefono!!)
+                                sesion!!.setProfesion(usuarios.profesion!!)
+                                sesion!!.setKey(usuarios.key!!)
+                                sesion!!.setTipo(usuarios.tipo!!)
+                            }
+                        }
+                        if(sesion!!.getTipo().equals("R")){
+                            Toast.makeText(
+                                    this,
+                                    "Cuenta no registrada como administrador",
+                                    Toast.LENGTH_LONG
+                            ).show()
+                            progressDialog!!.dismiss()
+                        }else{
+                            progressDialog!!.dismiss()
+                            lanzarActividad()
+                        }
+
+
+                    } else {
+                        progressDialog!!.dismiss()
+                        // If sign in fails, display a message to the user.
+                        Log.e("", "signInWithEmail:failure", task.exception)
+                        Toast.makeText(
+                                this@LoginActivity, "Ha fallado la autenticación.",
+                                Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+    }
+
+
+    /**
+     * Función que permite reestablecer contraseña mediante el correo electrónico regsitrado
+     */
+    fun reestablecerPass(email: String) {
+
+        progressDialog!!.setMessage("Enviando información..")
+        progressDialog!!.show()
+        if (!TextUtils.isEmpty(email)) {
+            mAuth!!
+                    .sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            progressDialog!!.dismiss()
+                            val message = "Se envió email para reestablecer contraseña a " + email
+                            Log.d("Hola", message)
+                            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+
+                        } else {
+                            progressDialog!!.dismiss()
+                            Log.w("hola", task.exception!!.message)
+                            Toast.makeText(this, "Usuario no registrado con este email.", Toast.LENGTH_LONG).show()
+                        }
+                    }
+        } else {
+            progressDialog!!.dismiss()
+            var cancel = false
+            var focusView: View? = null
+            usuario.error = getString(R.string.error_field_required)
+            focusView = pass
+            cancel = true
+        }
+    }
+
 
     private fun populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -84,8 +210,10 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
      * Callback received when a permissions request has been completed.
      */
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+            requestCode: Int, permissions: Array<String>,
+            grantResults: IntArray
+    ) {
         if (requestCode == REQUEST_READ_CONTACTS) {
             if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 populateAutoComplete()
@@ -103,6 +231,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         if (mAuthTask != null) {
             return
         }
+
 
         // Reset errors.
         usuario.error = null
@@ -131,12 +260,14 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             focusView?.requestFocus()
         } else {
 
-            Log.d("Es logueado","Hola")
+
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true)
-            mAuthTask = UserLoginTask(emailStr, passwordStr)
-            mAuthTask!!.execute(null as Void?)
+            progressDialog!!.setMessage("Validando usuario...")
+            progressDialog!!.show()
+            ingresar(emailStr, passwordStr)
+            // mAuthTask = UserLoginTask(emailStr, passwordStr)
+            //mAuthTask!!.execute(null as Void?)
 
 
         }
@@ -191,18 +322,24 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     override fun onCreateLoader(i: Int, bundle: Bundle?): Loader<Cursor> {
-        return CursorLoader(this,
+        return CursorLoader(
+                this,
                 // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
+                Uri.withAppendedPath(
+                        ContactsContract.Profile.CONTENT_URI,
+                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY
+                ), ProfileQuery.PROJECTION,
 
                 // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE + " = ?", arrayOf(ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE),
+                ContactsContract.Contacts.Data.MIMETYPE + " = ?", arrayOf(
+                ContactsContract.CommonDataKinds.Email
+                        .CONTENT_ITEM_TYPE
+        ),
 
                 // Show primary email addresses first. Note that there won't be
                 // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC")
+                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC"
+        )
     }
 
     override fun onLoadFinished(cursorLoader: Loader<Cursor>, cursor: Cursor) {
@@ -222,8 +359,10 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private fun addEmailsToAutoComplete(emailAddressCollection: List<String>) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        val adapter = ArrayAdapter(this@LoginActivity,
-                android.R.layout.simple_dropdown_item_1line, emailAddressCollection)
+        val adapter = ArrayAdapter(
+                this@LoginActivity,
+                android.R.layout.simple_dropdown_item_1line, emailAddressCollection
+        )
 
         usuario.setAdapter(adapter)
     }
@@ -231,7 +370,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     object ProfileQuery {
         val PROJECTION = arrayOf(
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY)
+                ContactsContract.CommonDataKinds.Email.IS_PRIMARY
+        )
         val ADDRESS = 0
         val IS_PRIMARY = 1
     }
@@ -240,9 +380,10 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
+    inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) :
+            AsyncTask<Void, Void, Boolean>() {
 
-        val loginActivity=LoginActivity
+        val loginActivity = LoginActivity
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
@@ -300,11 +441,26 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         return false
     }
 
-    fun lanzarActividad(){
-        val intent = Intent(this,ActivityLogueado::class.java)
-        intent.putExtra("nombre","Victor")
-        intent.putExtra("apellido","Cruz")
+    /**
+     * Permite lanzar la actividad
+     */
+    fun lanzarActividad() {
+        val intent = Intent(this, ActivityLogueado::class.java)
+
         startActivity(intent)
         finish()
+    }
+
+    override fun actualizarAdaptador(listaPlantas: ListaPlantas) {
+
+    }
+
+    override fun cedredenciales(usuarios: Usuarios) {
+        listaUsuarios(usuarios)
+    }
+
+    fun listaUsuarios(usuarios: Usuarios) {
+        listaUsuarios.add(usuarios)
+
     }
 }

@@ -2,6 +2,10 @@ package co.edu.uniquindio.vc.jq.herbariouq.util
 
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
@@ -16,26 +20,20 @@ import co.edu.uniquindio.vc.jq.herbariouq.R
 import co.edu.uniquindio.vc.jq.herbariouq.vo.ListaPlantas
 import kotlinx.android.synthetic.main.resumen_lista_plantas.view.*
 import android.support.v4.app.FragmentActivity
+import android.widget.ImageView
+import co.edu.uniquindio.vc.jq.herbariouq.Actividades.DetallePlantasActivity
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 
 
-
-class AdaptadorListaPlantas(fragment: Fragment, var listaPlantas:ArrayList<ListaPlantas>) :RecyclerView.Adapter<AdaptadorListaPlantas.ListaPlantasViewHolder>() {
+class AdaptadorListaPlantas (fragment: Fragment, var listaPlantas:ArrayList<ListaPlantas>,context:Context) :RecyclerView.Adapter<AdaptadorListaPlantas.ListaPlantasViewHolder>() {
 
     private lateinit var listener:OnClickAdaptadorListaPlantas
 
-    lateinit var context: Context
+    var context = context
 
 
-    fun mostrarDetallePlanta() {
-
-        var fragment1 = Fragment()
-
-        // var fragment:FragmentManager
-        val detallePlanta = DetallePlantasFragment()
-        detallePlanta.setStyle(DialogFragment.STYLE_NORMAL,
-                R.style.DialogoTitulo)
-
-    }
 
     init{
         try {
@@ -53,6 +51,7 @@ class AdaptadorListaPlantas(fragment: Fragment, var listaPlantas:ArrayList<Lista
         val nombre: TextView = itemView.txtNombre
         val genero: TextView = itemView.txtGenero
         val btnDetalle: Button = itemView.btn_detalle
+        private var fotoPlanta: ImageView = itemView.imgPlanta
 
 
         init {
@@ -63,17 +62,39 @@ class AdaptadorListaPlantas(fragment: Fragment, var listaPlantas:ArrayList<Lista
         fun bindListaPlantas(listaPlantas: ListaPlantas){
             nombre.text = listaPlantas.nombre
             genero.text = listaPlantas.genero
+            GetImageToURL().execute(listaPlantas.urlImagen)
+
 
 
         }
         override fun onClick(v: View?) {
             Log.d("El valor es,","+"+v!!.id)
-           // Log.d("Planta", "Elemento $adapterPosition clickeado ${nombre.text}")
-           // listener.onClickPosition(adapterPosition)
-
-
-
+            Log.d("Planta", "Elemento $adapterPosition clickeado ${nombre.text}")
+            listener.onClickPosition(adapterPosition)
         }
+
+        private inner class GetImageToURL : AsyncTask<String, Void, Bitmap>() {
+
+            override fun doInBackground(vararg params: String): Bitmap? {
+                try {
+                    val url = URL(params[0])
+                    val connection = url.openConnection() as HttpURLConnection
+                    connection.setDoInput(true)
+                    connection.connect()
+                    val input = connection.getInputStream()
+                    return BitmapFactory.decodeStream(input)
+                } catch (e: IOException) {
+                    // Log exception
+                    return null
+                }
+
+            }
+
+            override fun onPostExecute(myBitMap: Bitmap) {
+                fotoPlanta!!.setImageBitmap(myBitMap)
+            }
+        }
+
 
 
 
@@ -83,36 +104,49 @@ class AdaptadorListaPlantas(fragment: Fragment, var listaPlantas:ArrayList<Lista
         val v = LayoutInflater.from(p0.context)
                 .inflate(R.layout.resumen_lista_plantas, p0, false)
 
-        v.btn_detalle.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                mostrarDetallePlanta()
-            }
-
-        })
         return ListaPlantasViewHolder(v)
     }
 
     override fun getItemCount(): Int {
-       return listaPlantas.size
+        return listaPlantas.size
     }
 
     override fun onBindViewHolder(p0: ListaPlantasViewHolder, p1: Int) {
-       p0.bindListaPlantas(listaPlantas.get(p1))
+
+        p0.bindListaPlantas(listaPlantas.get(p1))
+        p0.btnDetalle.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                mostrarDetallePlanta(p1)
+
+            }
+
+        })
     }
 
     interface OnClickAdaptadorListaPlantas {
         fun onClickPosition(pos: Int)
     }
 
-    fun lanzarFragment(){
+    /**
+     * Función que permite lanzar actividad de detalle PALNTAS
+     */
 
-        val activity = context as FragmentActivity
-        val fm = activity.supportFragmentManager
-        val alertDialog = DetallePlantasFragment()
-        alertDialog.show(fm, "fragment_alert")
+    fun mostrarDetallePlanta(p1: Int) {
+
+        var listaPlanta: ArrayList<ListaPlantas> = ArrayList()
+        listaPlanta = ArrayList()
+
+        listaPlanta.add(
+                ListaPlantas(listaPlantas[p1].nombre,listaPlantas[p1].genero,listaPlantas[p1].familia,listaPlantas[p1].subfamilia,
+                        listaPlantas[p1].tribu,listaPlantas[p1].especie,listaPlantas[p1].detalle,listaPlantas[p1].autor,
+                        listaPlantas[p1].estado,listaPlantas[p1].urlImagen,listaPlantas[p1].email,listaPlanta[p1].key))
+
+        val intent = Intent(context, DetallePlantasActivity::class.java)
+        intent.putExtra("lista",listaPlanta)
+        intent.putExtra("p0",0)
+        context.startActivity(intent)
+
     }
-
-
 
 
 }

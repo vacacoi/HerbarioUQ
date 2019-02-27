@@ -34,16 +34,7 @@ class ListaPlantasActivity : AppCompatActivity(),ListaPlantasFragment.OnPlantaSe
 
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
 
-        listaPlantas = ArrayList()
-        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor"))
-        listaPlantas.add(ListaPlantas("Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1"))
-        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor"))
-        listaPlantas.add(ListaPlantas("Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1"))
-        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor"))
-        listaPlantas.add(ListaPlantas("Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1"))
 
-        val fragmentLista = supportFragmentManager.findFragmentById(R.id.fragmentoListaPlantas) as ListaPlantasFragment
-        fragmentLista.listaPlantas = listaPlantas
 
     }
 

@@ -22,7 +22,9 @@ import android.widget.LinearLayout
 import co.edu.uniquindio.vc.jq.herbariouq.R
 import co.edu.uniquindio.vc.jq.herbariouq.util.AdaptadorListaPlantas
 import co.edu.uniquindio.vc.jq.herbariouq.util.AdaptadorListaRecol
+import co.edu.uniquindio.vc.jq.herbariouq.util.ManagerFireBase
 import co.edu.uniquindio.vc.jq.herbariouq.vo.ListaPlantas
+import co.edu.uniquindio.vc.jq.herbariouq.vo.Usuarios
 import kotlinx.android.synthetic.main.fragment_lista_plantas.*
 import kotlinx.android.synthetic.main.resumen_lista_plantas.*
 import java.util.ArrayList
@@ -36,12 +38,23 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class ListaPlantasFragment : Fragment() {
+class ListaPlantasFragment : Fragment(),AdaptadorListaPlantas.OnClickAdaptadorListaPlantas,ManagerFireBase.onActualizarAdaptador {
+
+    override fun cedredenciales(usuarios: Usuarios) {
+
+    }
+
+
+    override fun actualizarAdaptador(listaPlantas: ListaPlantas) {
+        agregarPlantas(listaPlantas)
+    }
 
 
     private lateinit var listener: OnPlantaSeleccionadoListener
     var listaPlantas: ArrayList<ListaPlantas> = ArrayList()
     var adaptador: AdaptadorListaPlantas? = null
+    lateinit var managerFireBase: ManagerFireBase
+
 
     interface OnPlantaSeleccionadoListener {
         fun onPlantaSeleccionado(pos: Int)
@@ -87,19 +100,25 @@ class ListaPlantasFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adaptador = AdaptadorListaPlantas(this, listaPlantas)
+        managerFireBase = ManagerFireBase.managerInstance
+        managerFireBase.listener = this
+        managerFireBase.escucharEventoFireBase(1,context!!)//Llama al método escucharEventoFirebase, dónde se envía por parámetro 1 los cual indica mostrar lista de plantas
+
+        adaptador = AdaptadorListaPlantas(this,listaPlantas,activity!!.baseContext)
         listaPlantas_view.adapter = this.adaptador
         listaPlantas_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         setHasOptionsMenu(true)
     }
 
 
-    fun mostrarDetallePlanta() {
-        val detallePlanta = DetallePlantasFragment()
-        detallePlanta.setStyle(DialogFragment.STYLE_NORMAL,
-                R.style.DialogoTitulo
-        )
-        detallePlanta.show(fragmentManager, "DetallePlanta")
+
+    override fun onClickPosition(pos: Int) {
+        listener!!.onPlantaSeleccionado(pos)
+    }
+
+    fun agregarPlantas(listaPlanta: ListaPlantas) {
+        listaPlantas.add(listaPlanta)
+        adaptador!!.notifyItemChanged(0)
     }
 
 

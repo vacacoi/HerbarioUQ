@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_plantas_pend.*
 
 class PlantasPendActivity : AppCompatActivity(), ListaPlantasPendFragment.OnPlantaPendSeleccionadoListener {
     override fun onPlantaSeleccionado(pos: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     var listaPlantas: ArrayList<ListaPlantas> = ArrayList()
@@ -22,12 +22,10 @@ class PlantasPendActivity : AppCompatActivity(), ListaPlantasPendFragment.OnPlan
         setContentView(R.layout.activity_plantas_pend)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
         listaPlantas = ArrayList()
-        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor","Estadp"))
-        listaPlantas.add(ListaPlantas("Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Estadp"))
-        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor","Estadp"))
-        listaPlantas.add(ListaPlantas("Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Estadp"))
-        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor","Estadp"))
-        listaPlantas.add(ListaPlantas("Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Flor1","Estadp"))
+        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor","Estadp","","",""))
+        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor","Estadp","","",""))
+        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor","Estadp","","",""))
+
 
         val fragmentLista = supportFragmentManager.findFragmentById(R.id.fragmentoListaPlantasPend) as ListaPlantasPendFragment
         fragmentLista.listaPlantas = listaPlantas
