@@ -12,8 +12,15 @@ import android.view.ViewGroup
 
 import co.edu.uniquindio.vc.jq.herbariouq.R
 import co.edu.uniquindio.vc.jq.herbariouq.util.AdaptadorListaRecol
+import co.edu.uniquindio.vc.jq.herbariouq.util.ManagerFireBase
+import co.edu.uniquindio.vc.jq.herbariouq.vo.ListaPlantas
 import co.edu.uniquindio.vc.jq.herbariouq.vo.ListaRecolectores
+import co.edu.uniquindio.vc.jq.herbariouq.vo.Usuarios
 import kotlinx.android.synthetic.main.fragment_lista_recol.*
+import android.R.attr.data
+
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,12 +36,15 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class ListaRecolFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+class ListaRecolFragment : Fragment(),AdaptadorListaRecol.OnClickAdaptadorListaRecol,ManagerFireBase.onActualizarAdaptador {
+
+
 
     var listaRecolectores: ArrayList<ListaRecolectores> = ArrayList()
     var adaptador: AdaptadorListaRecol? = null
+    lateinit var managerFireBase: ManagerFireBase
     private lateinit var listener: OnRecolSeleccionadoListener
+    var listaUsuarios: java.util.ArrayList<Usuarios> = java.util.ArrayList()
 
     interface OnRecolSeleccionadoListener {
         fun onPlantaSeleccionado(pos: Int)
@@ -75,9 +85,34 @@ class ListaRecolFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adaptador = AdaptadorListaRecol(this, listaRecolectores)
+        managerFireBase = ManagerFireBase.managerInstance
+        managerFireBase.listener = this
+        managerFireBase.escucharEventoFireBase(5,context!!)
+
+        adaptador = AdaptadorListaRecol(this, listaUsuarios,context!!)
         listaRecolectores_view.adapter = this.adaptador
         listaRecolectores_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         setHasOptionsMenu(true)
     }
+
+    override fun onClickPosition(pos: Int) {
+
+    }
+
+    override fun actualizarAdaptador(listaPlantas: ListaPlantas) {
+
+    }
+
+    override fun cedredenciales(usuarios: Usuarios) {
+        listaUsuarios(usuarios)
+    }
+
+    fun listaUsuarios(usuarios: Usuarios) {
+
+        listaUsuarios.add(usuarios)
+        adaptador!!.notifyItemChanged(0)
+
+    }
+
+
 }

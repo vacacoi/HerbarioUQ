@@ -87,11 +87,6 @@ class ManagerFireBase private constructor() {
         return hourdateFormat.format(date)
     }
 
-    fun eliminar() {
-    }
-
-    fun actualizar() {
-    }
 
     /**
      * Permite cargar una imagen a FireBase y actualizar la url en donde queda la imagen guardada.
@@ -118,6 +113,9 @@ class ManagerFireBase private constructor() {
         return downloadUri
     }
 
+    /**
+     * Función que permite actualizar los datos de un usuarios
+     */
     fun updateUser(nombre:String,apellido:String,telefono:String,profesion:String,key:String){
 
         dataRef!!.database.reference.child(key).child("usuarios").child("nombre").setValue(nombre)
@@ -155,6 +153,11 @@ class ManagerFireBase private constructor() {
                     if (sesion!!.getusename().equals(Usuarios.email)) {
                         listener.actualizarAdaptador(listaPlantas)
                     }*/
+                }else if(p0.child("plantas").exists() && tipo == 4){
+                    val listaPlantas = p0.child("plantas").getValue(ListaPlantas::class.java)!!
+                    if (listaPlantas.estado == "I") {
+                        listener.actualizarAdaptador(listaPlantas)
+                    }
                 }
             }
 
@@ -175,6 +178,18 @@ class ManagerFireBase private constructor() {
                     if (sesion!!.getusename().equals(listaPlantas.email)) {
                         listener.actualizarAdaptador(listaPlantas)
                     }
+                } else if(p0.child("plantas").exists() && tipo == 4){
+                    val listaPlantas = p0.child("plantas").getValue(ListaPlantas::class.java)!!
+                    if (listaPlantas.estado == "I") {
+                        listener.actualizarAdaptador(listaPlantas)
+                    }
+                }else if (p0.child("usuarios").exists() && tipo == 5) {
+                    Log.d("Llega hasta aqui","=")
+                    val listaUsuario = p0.child("usuarios").getValue(Usuarios::class.java)!!
+                    if(listaUsuario.estado == "P"){
+                        listener.cedredenciales(listaUsuario)
+                    }
+
                 }
             }
 
@@ -183,45 +198,30 @@ class ManagerFireBase private constructor() {
         })
     }
 
-    /*fun listaPlantas(): ArrayList<ListaPlantas> {
 
-
-        Log.d("hola","="+dataRef!!.orderByKey().equalTo("plantas")+"----"+dataRef!!.orderByKey())
-        var listaPlantas: ArrayList<ListaPlantas> = ArrayList()
-        dataRef!!.orderByKey().addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                p0.getValue(ListaPlantas::class.java)
-                for (snapshot in p0.getChildren()) {
-
-                    if(snapshot.hasChildren()){
-                        val listaplanta = snapshot.child("plantas").getValue(ListaPlantas::class.java)
-
-                        Log.d(
-                            "Nombre", listaplanta!!.urlImagen
-                        )
-                    }
-
-
-                }
-
-
-            }
-
-
-        })
-
-
-        return listaPlantas
-    }*/
 
     interface onActualizarAdaptador {
         fun actualizarAdaptador(listaPlantas: ListaPlantas)
         fun cedredenciales(usuarios: Usuarios)
     }
+
+
+    /**
+     * Pwrmite cambiar el estado de una planta, ya se a rechazada o aprobada
+     */
+    fun respuestaPlanta(estado:String?,key:String?,context: Context){
+        dataRef!!.database.reference.child(key!!).child("plantas").child("estado").setValue(estado!!)
+        alertDialog(context)
+    }
+
+    /**
+     * Permite cambiar el estado de un usuario a aprobado o rechazado
+     */
+    fun respuestaUsuario(estado:String?,key:String?,context: Context){
+        dataRef!!.database.reference.child(key!!).child("usuarios").child("estado").setValue(estado!!)
+        alertDialog(context)
+    }
+
 
     /**
      * Registrar email y contraseña
@@ -261,11 +261,6 @@ class ManagerFireBase private constructor() {
                     }
                 })
 
-
-    }
-
-
-    fun ingresar(email: String, password: String) {
 
     }
 

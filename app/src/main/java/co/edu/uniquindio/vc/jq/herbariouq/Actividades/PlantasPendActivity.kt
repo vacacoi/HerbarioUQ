@@ -21,14 +21,7 @@ class PlantasPendActivity : AppCompatActivity(), ListaPlantasPendFragment.OnPlan
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plantas_pend)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
-        listaPlantas = ArrayList()
-        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor","Estadp","","",""))
-        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor","Estadp","","",""))
-        listaPlantas.add(ListaPlantas("Flor","Flor","Flor","Flor","Flor","Flor","Flor","Flor","Estadp","","",""))
 
-
-        val fragmentLista = supportFragmentManager.findFragmentById(R.id.fragmentoListaPlantasPend) as ListaPlantasPendFragment
-        fragmentLista.listaPlantas = listaPlantas
 
     }
 

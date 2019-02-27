@@ -121,14 +121,14 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor>, ManagerFireB
                                 sesion!!.setTipo(usuarios.tipo!!)
                             }
                         }
-                        if(sesion!!.getTipo().equals("R")){
+                        if(sesion!!.getTipo().equals("R") || sesion!!.getTipo().equals("P") || sesion!!.getTipo().equals("I")){
                             Toast.makeText(
                                     this,
                                     "Cuenta no registrada como administrador",
                                     Toast.LENGTH_LONG
                             ).show()
                             progressDialog!!.dismiss()
-                        }else{
+                        }else {
                             progressDialog!!.dismiss()
                             lanzarActividad()
                         }

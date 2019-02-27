@@ -5,7 +5,6 @@ import android.os.Parcelable
 import java.io.Serializable
 
 class Usuarios() : Parcelable, Serializable {
-
     var nombre: String? = null
     var apellido: String? = null
     var correo: String? = null
@@ -15,6 +14,7 @@ class Usuarios() : Parcelable, Serializable {
     var urlImagenPerfil: String? = null
     var key: String? = null
     var tipo: String? = null
+    var estado: String? = null
 
     constructor(parcel: Parcel) : this() {
         nombre = parcel.readString()
@@ -25,6 +25,7 @@ class Usuarios() : Parcelable, Serializable {
         urlImagenPerfil = parcel.readString()
         key = parcel.readString()
         tipo = parcel.readString()
+        estado = parcel.readString()
     }
 
 
@@ -37,7 +38,8 @@ class Usuarios() : Parcelable, Serializable {
             profesion: String?,
             urlImagenPerfil: String?,
             key: String?,
-            tipo: String?
+            tipo: String?,
+            estado : String?
     ) : this() {
 
         this.nombre = nombre
@@ -49,6 +51,7 @@ class Usuarios() : Parcelable, Serializable {
         this.urlImagenPerfil = urlImagenPerfil
         this.key = key
         this.tipo = tipo
+        this.estado = estado
 
     }
 
@@ -64,6 +67,7 @@ class Usuarios() : Parcelable, Serializable {
         parcel.writeString(urlImagenPerfil)
         parcel.writeString(key)
         parcel.writeString(tipo)
+        parcel.writeString(estado)
     }
 
     override fun describeContents(): Int {

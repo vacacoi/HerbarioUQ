@@ -117,6 +117,7 @@ class ListaPlantasFragment : Fragment(),AdaptadorListaPlantas.OnClickAdaptadorLi
     }
 
     fun agregarPlantas(listaPlanta: ListaPlantas) {
+        //listaPlantas.remove(listaPlanta)
         listaPlantas.add(listaPlanta)
         adaptador!!.notifyItemChanged(0)
     }
